@@ -1,12 +1,10 @@
 ﻿public class Space
 {
-    public int ID { get; }
-    
     private string _state;
-    public string State
+    private string State
     {
         get => _state;
-        private set
+        set
         {
             if (value is "Clicked" or "NotClicked" or "Questioned" or "Flagged")
             {
@@ -15,19 +13,31 @@
         }
     }
 
-    public string NumOfMines { get; }
-    
-    public Space(int id)
+    private int _numOfMines;
+    public int NumOfMines
     {
-        ID = id;
+        get
+        {
+            if (State is "Clicked") return _numOfMines;
+            return 0;
+        }
+    }
+
+    public Space()
+    {
         State = "NotClicked";
+    }
+
+    public Space(string state)
+    {
+        State = state;
     }
 
     /// <summary>
     /// Changes the state of the space.
     /// </summary>
     /// <param name="newState"></param>
-    /// <returns>Always returns true.</returns>
+    /// <returns>Always returns true if the main type is Space.</returns>
     public virtual bool ChangeState(string newState)
     {
         if (State == "NotClicked")

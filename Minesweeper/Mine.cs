@@ -1,12 +1,10 @@
 ﻿public class Mine : Space
 {
-    public int ID { get; }
-    
     private string _state;
-    public string State
+    private string State
     {
         get => _state;
-        private set
+        set
         {
             if (value is "Armed" or "Flagged" or "Questioned" or "Exploded")
             {
@@ -15,9 +13,8 @@
         }
     }
 
-    public Mine(int id) : base(id)
+    public Mine()
     {
-        ID = id;
         State = "Armed";
     }
 
