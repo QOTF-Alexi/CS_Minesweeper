@@ -5,7 +5,7 @@
     public int MineCount { get; }
     private bool _isInitialised = false;
 
-    private readonly Space[,] _mineField;
+    public Space[,] _mineField { get; private set; }
 
     public MineField(int horizontalSize, int verticalSize, int mineCount)
     {
@@ -44,12 +44,59 @@
     /// </summary>
     private void PlaceSpaces()
     {
-        /*
-         * for loop through all elements in 2D array
-         * if position is already of type Mine or Space, skip it
-         * else make it a new Space object.
-         * set Space's NumOfMines accordingly, default should be 0 and NotClicked value should be 0 too
-         */
+        for (int i = 0; i < _mineField.GetLength(0); i++) 
+        {
+            for (int j = 0; j < _mineField.GetLength(1); j++)
+            {
+                if (_mineField[i, j].GetType() == typeof(Space) || _mineField[i,j].GetType() == typeof(Space))
+                {
+
+                }
+                else
+                {
+                    _mineField[i, j] = new Space(CalculateMines(i, j));
+                }
+            }
+        }
+    }
+
+    private int CalculateMines(int x, int y)
+    {
+        int counter = 0;
+        if (_mineField[x-1,y+1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x-1,y].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x-1,y-1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x,y+1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x,y-1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x+1,y+1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x+1,y].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+        if (_mineField[x+1,y-1].GetType() == typeof(Mine))
+        {
+            counter += 1;
+        }
+
+        return counter;
     }
 
     public string SelectSpace(int posH, int posV, string newState)

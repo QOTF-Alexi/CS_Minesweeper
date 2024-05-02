@@ -13,7 +13,7 @@
         }
     }
 
-    public Mine()
+    public Mine() : base(0)
     {
         State = "Armed";
     }

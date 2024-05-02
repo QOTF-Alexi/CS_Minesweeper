@@ -23,9 +23,11 @@
         }
     }
 
-    public Space()
+    public Space(int numOfMines)
     {
         State = "NotClicked";
+        
+        _numOfMines = numOfMines;
     }
 
     public Space(string state)
