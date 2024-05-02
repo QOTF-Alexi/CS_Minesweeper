@@ -1,5 +1,7 @@
 ﻿public class Program
 {
+    public static int ClearedMines { get; set; } = 0;
+
     public static void Main(string[] args)
     {
         Console.Title = "Minesweeper V1 by QOTF-Alexi";
@@ -33,7 +35,7 @@
         int[] firstSweep = { Convert.ToInt32(strFirstSweep[0]) - 1, Convert.ToInt32(strFirstSweep[1]) - 1 };
         var mineField = new MineField(width, height, numMines, firstSweep);
         bool running = true;
-        while (running)
+        while (running && ClearedMines != mineField.MineCount)
         {
             mineField.PrintField();
             Console.Write("Select a field: ");
@@ -43,6 +45,11 @@
             var newState = Console.ReadLine();
             running = mineField.SelectSpace(sweep[0], sweep[1], newState);
             Console.WriteLine(running ? $"Space state changed to {newState}" : "Mine!");
+        }
+
+        if (ClearedMines == mineField.MineCount)
+        {
+            Console.WriteLine("You disarmed all mines and won!");
         }
     }
 }

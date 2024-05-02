@@ -34,6 +34,11 @@
         {
             State = newState;
         }
+
+        if (newState == "Flagged")
+        {
+            Program.ClearedMines++;
+        }
         return true;
     }
 }
