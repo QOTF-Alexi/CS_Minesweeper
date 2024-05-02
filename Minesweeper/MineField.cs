@@ -3,6 +3,7 @@
     private int HorizontalSize { get; }
     private int VerticalSize { get; }
     public int MineCount { get; }
+    private int _placedFlags { get; set; }
     private bool _isInitialised = false;
 
     public Space[,] _mineField { get; private set; }
@@ -85,6 +86,14 @@
 
     public bool SelectSpace(int posH, int posV, string newState)
     {
+        if (newState == "Flagged" && _placedFlags == MineCount)
+        {
+            Console.WriteLine("Maximum amount of flags has been placed. Remove one!");
+            return true;
+        }
+
+        if (newState == "Flagged") _placedFlags++;
+        if (_mineField[posH - 1, posV - 1].State == "Flagged") _placedFlags--;
         return _mineField[posH - 1, posV - 1].ChangeState(newState);
     }
 

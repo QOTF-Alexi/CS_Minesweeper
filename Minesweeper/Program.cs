@@ -44,7 +44,7 @@
             Console.Write("What do you want the field to become (Questioned, Flagged, Clicked)? ");
             var newState = Console.ReadLine();
             running = mineField.SelectSpace(sweep[0], sweep[1], newState);
-            Console.WriteLine(running ? $"Space state changed to {newState}" : "Mine!");
+            Console.WriteLine(running ? $"Field change was safe." : "Mine!");
         }
 
         if (ClearedMines == mineField.MineCount)

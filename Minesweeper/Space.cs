@@ -1,7 +1,7 @@
 ﻿public class Space
 {
     private string _state;
-    private string State
+    public string State
     {
         get => _state;
         set
