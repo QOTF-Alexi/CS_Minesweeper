@@ -11,11 +11,18 @@
         int height = Convert.ToInt32(dimensions[1]);
         int numMines = Convert.ToInt32(strNumMines);
         Console.WriteLine("Your minefield:");
+        for (int header = 1; header <= width; header++)
+        {
+            Console.Write($"    {header}");
+        }
+        Console.Write("\n");
+        
         for (int h = 1; h <= height; h++)
         {
+            Console.Write($"{h} ");
             for (int w = 1; w <= width; w++)
             {
-                Console.Write($" {w},{h} ");
+                Console.Write($" 999 ");
             }
 
             Console.Write("\n");
@@ -25,6 +32,17 @@
         var strFirstSweep = Console.ReadLine().Split(',');
         int[] firstSweep = { Convert.ToInt32(strFirstSweep[0]) - 1, Convert.ToInt32(strFirstSweep[1]) - 1 };
         var mineField = new MineField(width, height, numMines, firstSweep);
-        mineField.PrintField();
+        bool running = true;
+        while (running)
+        {
+            mineField.PrintField();
+            Console.Write("Select a field: ");
+            var selectedField = Console.ReadLine().Split(',');
+            int[] sweep = { Convert.ToInt32(selectedField[0]), Convert.ToInt32(selectedField[1]) };
+            Console.Write("What do you want the field to become (Questioned, Flagged, Clicked)? ");
+            var newState = Console.ReadLine();
+            running = mineField.SelectSpace(sweep[0], sweep[1], newState);
+            Console.WriteLine(running ? $"Space state changed to {newState}" : "Mine!");
+        }
     }
 }

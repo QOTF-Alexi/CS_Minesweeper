@@ -83,17 +83,9 @@
         return counter;
     }
 
-    public string SelectSpace(int posH, int posV, string newState)
+    public bool SelectSpace(int posH, int posV, string newState)
     {
-        if (!_isInitialised)
-        {
-            _mineField[posH, posV] = new Space("Clicked");
-            PlaceMines();
-            PlaceSpaces();
-            _isInitialised = true;
-        }
-        var isSafe = _mineField[posH - 1, posV - 1].ChangeState(newState);
-        return isSafe ? $"Space state changed to {newState}" : "Mine!";
+        return _mineField[posH - 1, posV - 1].ChangeState(newState);
     }
 
     public void PrintField()

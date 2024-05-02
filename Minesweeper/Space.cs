@@ -19,6 +19,8 @@
         get
         {
             if (State is "Clicked") return _numOfMines;
+            else if (State is "Questioned") return -1;
+            else if (State is "Flagged") return -2;
             return 999;
         }
     }
@@ -48,7 +50,7 @@
     /// <returns>Always returns true if the main type is Space.</returns>
     public virtual bool ChangeState(string newState)
     {
-        if (State == "NotClicked")
+        if (State is "NotClicked" or "Flagged" or "Questioned")
         {
             State = newState;
         }
