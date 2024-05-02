@@ -1,4 +1,15 @@
-﻿public class Program
+﻿/*
+ * Minesweeper C# by QOTF-Alexi
+ * A very basic text-based OOP Minesweeper game.
+ * "999" means un-clicked field, "-1" means questioned field, "-2" means flagged field.
+ * Anything else is the amount of nearby mines.
+ *
+ * TODO:
+ * - Unhappy flow checks 'n stuff
+ * - Automatically open surrounding free fields
+ */
+
+public class Program
 {
     public static int ClearedMines { get; set; } = 0;
 
@@ -43,7 +54,7 @@
             int[] sweep = { Convert.ToInt32(selectedField[0]), Convert.ToInt32(selectedField[1]) };
             Console.Write("What do you want the field to become (Questioned, Flagged, Clicked)? ");
             var newState = Console.ReadLine();
-            running = mineField.SelectSpace(sweep[0], sweep[1], newState);
+            running = mineField.SelectSpace(sweep[0] - 1, sweep[1] - 1, newState);
             Console.WriteLine(running ? $"Field change was safe." : "Mine!");
         }
 

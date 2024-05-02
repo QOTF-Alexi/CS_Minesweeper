@@ -93,8 +93,9 @@
         }
 
         if (newState == "Flagged") _placedFlags++;
-        if (_mineField[posH - 1, posV - 1].State == "Flagged") _placedFlags--;
-        return _mineField[posH - 1, posV - 1].ChangeState(newState);
+        if (_mineField[posH, posV].State == "Flagged") _placedFlags--;
+        
+        return _mineField[posH, posV].ChangeState(newState);
     }
 
     public void PrintField()
