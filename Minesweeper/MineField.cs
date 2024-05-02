@@ -7,12 +7,15 @@
 
     public Space[,] _mineField { get; private set; }
 
-    public MineField(int horizontalSize, int verticalSize, int mineCount)
+    public MineField(int horizontalSize, int verticalSize, int mineCount, int[] firstSweep)
     {
         HorizontalSize = horizontalSize;
         VerticalSize = verticalSize;
         MineCount = mineCount;
         _mineField = new Space[HorizontalSize, VerticalSize];
+        _mineField[firstSweep[0], firstSweep[1]] = new Space("Clicked");
+        PlaceMines();
+        PlaceSpaces();
     }
 
     /// <summary>
@@ -28,7 +31,7 @@
         {
             ranH = rngH.Next(0, HorizontalSize);
             ranV = rngV.Next(0, VerticalSize);
-            if (_mineField[ranH, ranV].GetType() != typeof(Mine) && _mineField[ranH, ranV].GetType() != typeof(Space))
+            if (_mineField[ranH, ranV] is null || (_mineField[ranH, ranV].GetType() != typeof(Mine) && _mineField[ranH, ranV].GetType() != typeof(Space)))
             {
                 _mineField[ranH, ranV] = new Mine();
             }
@@ -48,11 +51,7 @@
         {
             for (int j = 0; j < _mineField.GetLength(1); j++)
             {
-                if (_mineField[i, j].GetType() == typeof(Space) || _mineField[i,j].GetType() == typeof(Space))
-                {
-
-                }
-                else
+                if (_mineField[i, j] is null || (_mineField[i, j].GetType() != typeof(Mine) && _mineField[i, j].GetType() != typeof(Space)))
                 {
                     _mineField[i, j] = new Space(CalculateMines(i, j));
                 }
@@ -63,37 +62,21 @@
     private int CalculateMines(int x, int y)
     {
         int counter = 0;
-        if (_mineField[x-1,y+1].GetType() == typeof(Mine))
+        int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+        int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+        for (int i = 0; i < 8; i++)
         {
-            counter += 1;
-        }
-        if (_mineField[x-1,y].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x-1,y-1].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x,y+1].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x,y-1].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x+1,y+1].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x+1,y].GetType() == typeof(Mine))
-        {
-            counter += 1;
-        }
-        if (_mineField[x+1,y-1].GetType() == typeof(Mine))
-        {
-            counter += 1;
+            int newX = x + dx[i];
+            int newY = y + dy[i];
+
+            if (newX >= 0 && newY >= 0 && newX < HorizontalSize && newY < VerticalSize)
+            {
+                if (_mineField[newX, newY] is not null && _mineField[newX, newY].GetType() == typeof(Mine))
+                {
+                    counter++;
+                }
+            }
         }
 
         return counter;
