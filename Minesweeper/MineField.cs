@@ -13,9 +13,10 @@
         VerticalSize = verticalSize;
         MineCount = mineCount;
         _mineField = new Space[HorizontalSize, VerticalSize];
-        _mineField[firstSweep[0], firstSweep[1]] = new Space("Clicked");
+        _mineField[firstSweep[0], firstSweep[1]] = new Space("Clicked"); // required for setup.
         PlaceMines();
         PlaceSpaces();
+        _mineField[firstSweep[0], firstSweep[1]] = new Space("Clicked", CalculateMines(firstSweep[0], firstSweep[1])); // re-create with correct mine count
     }
 
     /// <summary>
@@ -93,5 +94,25 @@
         }
         var isSafe = _mineField[posH - 1, posV - 1].ChangeState(newState);
         return isSafe ? $"Space state changed to {newState}" : "Mine!";
+    }
+
+    public void PrintField()
+    {
+        for (int header = 1; header <= HorizontalSize; header++)
+        {
+            Console.Write($"    {header}");
+        }
+        Console.Write("\n");
+        
+        for (int h = 1; h <= VerticalSize; h++)
+        {
+            Console.Write($"{h} ");
+            for (int w = 1; w <= HorizontalSize; w++)
+            {
+                Console.Write($" {_mineField[w-1,h-1].NumOfMines} ");
+            }
+
+            Console.Write("\n");
+        }
     }
 }

@@ -23,7 +23,8 @@
 
         Console.Write("Which field would you like to sweep first? ");
         var strFirstSweep = Console.ReadLine().Split(',');
-        int[] firstSweep = { Convert.ToInt32(strFirstSweep[0]), Convert.ToInt32(strFirstSweep[1]) };
+        int[] firstSweep = { Convert.ToInt32(strFirstSweep[0]) - 1, Convert.ToInt32(strFirstSweep[1]) - 1 };
         var mineField = new MineField(width, height, numMines, firstSweep);
+        mineField.PrintField();
     }
 }

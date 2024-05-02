@@ -19,7 +19,7 @@
         get
         {
             if (State is "Clicked") return _numOfMines;
-            return 0;
+            return 999;
         }
     }
 
@@ -33,6 +33,12 @@
     public Space(string state)
     {
         State = state;
+    }
+    
+    public Space(string state, int numOfMines)
+    {
+        State = state;
+        _numOfMines = numOfMines;
     }
 
     /// <summary>
